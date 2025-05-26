@@ -1,26 +1,22 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/loginPage';
 import { ProductsPage } from '../pages/productsPage';
 
 test.describe('Sorting Feature', () => {
-  test('You sort items from A to Z', async ({ page }) => {
-    const login = new LoginPage(page);
-    const product = new ProductsPage(page);
+  let product: ProductsPage;
+test.beforeEach(async ({ page }) => {
+    product = new ProductsPage(page);
+    await page.goto('https://www.saucedemo.com/inventory.html');
+    await page.waitForSelector('.inventory_list');
+  });
 
-    await login.goto();
-    await login.login(process.env.USER_NAME!, process.env.PASSWORD_SWAG!);
+  test('should sort items alphabetically from A to Z', async ({ page }) => {
     await product.sortBy('az');
 
     const itemNames = await page.locator('.inventory_item_name').allTextContents();
     expect(itemNames[0]).toBe('Sauce Labs Backpack');
   });
 
-  test('You sort items by price high to low', async ({ page }) => {
-    const login = new LoginPage(page);
-    const product = new ProductsPage(page);
-
-    await login.goto();
-    await login.login(process.env.USER_NAME!, process.env.PASSWORD_SWAG!);
+  test('should sort items by price from high to low', async ({ page }) => {
     await product.sortBy('hilo');
 
     const priceStrings = await page.locator('.inventory_item_price').allTextContents();

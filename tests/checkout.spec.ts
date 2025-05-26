@@ -1,31 +1,24 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/loginPage';
 import { ProductsPage } from '../pages/productsPage';
 import { CartPage } from '../pages/cartPage';
 import { CheckoutPage } from '../pages/checkoutPage';
 
 test.describe('Checkout Feature', () => {
   test('should complete checkout process', async ({ page }) => {
-    const login = new LoginPage(page);
+    await page.goto('/inventory.html');
     const product = new ProductsPage(page);
     const cart = new CartPage(page);
     const checkout = new CheckoutPage(page);
-    await page.waitForTimeout(1000)
-    await login.goto();
-    await page.waitForTimeout(1000)
-    await login.login(process.env.USER_NAME!, process.env.PASSWORD_SWAG!);
-    await page.waitForTimeout(1000)
+    await expect(page.locator('.inventory_list')).toBeVisible();
     await product.addItemToCart('Sauce Labs Onesie');
-    await page.waitForTimeout(1000)
+    await expect(page.locator('.shopping_cart_link')).toBeVisible();
     await product.goToCart();
-    await page.waitForTimeout(1000)
+    await expect(page.locator('[data-test="checkout"]')).toBeVisible();
     await cart.proceedToCheckout();
-    await page.waitForTimeout(2000)
+    await expect(page.locator('[data-test="firstName"]')).toBeVisible();
     await checkout.fillCheckoutInfo('Maha', 'dalaa', 'P400');
-    await page.waitForTimeout(2000)
+    await expect(page.locator('[data-test="finish"]')).toBeVisible();
     await checkout.finishOrder();
-    await page.waitForTimeout(2000)
     await expect(checkout.getSuccessMessage()).toContainText('Thank you for your order!');
-    await page.waitForTimeout(2000)
   });
 });

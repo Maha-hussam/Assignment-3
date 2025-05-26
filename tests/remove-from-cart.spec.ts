@@ -1,24 +1,17 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/loginPage';
 import { ProductsPage } from '../pages/productsPage';
 
 test.describe('Remove from Cart Feature', () => {
-  test.beforeEach(async ({ page }) => {
-    const login = new LoginPage(page);
-     await page.waitForTimeout(2000)
-    await login.goto();
-    await login.login(process.env.USER_NAME!, process.env.PASSWORD_SWAG!);
-  });
-
   test('You remove item from cart', async ({ page }) => {
+    await page.goto('/inventory.html');
     const product = new ProductsPage(page);
-    await page.waitForTimeout(2000)
+    await page.goto('https://www.saucedemo.com/inventory.html');
+    await expect(page.locator('.inventory_list')).toBeVisible();
     await product.addItemToCart('Sauce Labs Bike Light');
-     await page.waitForTimeout(2000)
     await product.removeItemFromCart('Sauce Labs Bike Light');
-     await page.waitForTimeout(2000)
+    await expect(page.locator('.shopping_cart_link')).toBeVisible();
     await product.goToCart();
-     await page.waitForTimeout(2000)
+
     await expect(page.locator('.cart_item')).toHaveCount(0);
   });
 });
