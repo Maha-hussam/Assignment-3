@@ -14,7 +14,7 @@ export class LoginPage {
   }
 
    async goto() {
-    await this.page.goto('https://www.saucedemo.com/');
+    await this.page.goto('/');
   }
   
   // Actions
@@ -22,6 +22,6 @@ export class LoginPage {
     await this.usernameInput.fill(username);
     await this.passwordInput.fill(password);
     await this.loginButton.click();
-    
+  
   }
 }

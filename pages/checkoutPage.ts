@@ -14,7 +14,7 @@ export class CheckoutPage {
     await this.page.click('#finish');
   }
 
-  async getSuccessMessage() {
-    return this.page.textContent('.complete-header');
-  }
+  getSuccessMessage() {
+    return this.page.locator('.complete-header');
+}
 }

@@ -7,3 +7,4 @@ export class CartPage {
     await this.page.click('#checkout');
   }
 }
+

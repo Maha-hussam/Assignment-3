@@ -12,7 +12,7 @@ export default defineConfig({
   reporter: 'html',
   use: {
     baseURL: process.env.BASE_URL,
-    headless: false,
+    headless: true,
     trace: 'on-first-retry',
   },
 

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
-import { ProductsPage } from '../pages/ProductsPage';
+import { ProductsPage } from '../pages/productsPage';
 
 test.describe('Remove from Cart Feature', () => {
   test.beforeEach(async ({ page }) => {
@@ -10,7 +10,7 @@ test.describe('Remove from Cart Feature', () => {
     await login.login(process.env.USER_NAME!, process.env.PASSWORD_SWAG!);
   });
 
-  test('should remove item from cart', async ({ page }) => {
+  test('You remove item from cart', async ({ page }) => {
     const product = new ProductsPage(page);
     await page.waitForTimeout(2000)
     await product.addItemToCart('Sauce Labs Bike Light');

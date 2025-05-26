@@ -1,6 +1,7 @@
 import { Page, Locator } from '@playwright/test';
 
 export class ProductsPage {
+  // Locators
   private sortDropdown: Locator;
   private cartLink: Locator;
 
@@ -9,18 +10,27 @@ export class ProductsPage {
     this.cartLink = this.page.locator('.shopping_cart_link');
   }
 
-  //Locator
-  private itemButton(itemName: string): Locator {
-    return this.page.locator(`.inventory_item:has-text("${itemName}") button`);
+  private addButton(itemName: string): Locator {
+    const id = this.formatItemName(itemName);
+    return this.page.locator(`[data-test="add-to-cart-${id}"]`);
+  }
+
+  private removeButton(itemName: string): Locator {
+    const id = this.formatItemName(itemName);
+    return this.page.locator(`[data-test="remove-${id}"]`);
+  }
+
+  private formatItemName(itemName: string): string {
+    return itemName.toLowerCase().replace(/\s+/g, '-');
   }
 
   // Actions
   async addItemToCart(itemName: string) {
-    await this.itemButton(itemName).click();
+    await this.addButton(itemName).click();
   }
 
   async removeItemFromCart(itemName: string) {
-    await this.itemButton(itemName).click();
+    await this.removeButton(itemName).click();
   }
 
   async sortBy(option: string) {
@@ -31,4 +41,3 @@ export class ProductsPage {
     await this.cartLink.click();
   }
 }
-

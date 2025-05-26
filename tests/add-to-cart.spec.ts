@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
-import { ProductsPage } from '../pages/ProductsPage';
+import { ProductsPage } from '../pages/productsPage';
 
 test.describe('Add to Cart Feature', () => {
   test.beforeEach(async ({ page }) => {
-    const login = new LoginPage(page);
+    const login = new LoginPage(page)
     await page.waitForTimeout(1000)
     await login.goto();
     await login.login(process.env.USER_NAME!, process.env.PASSWORD_SWAG!);

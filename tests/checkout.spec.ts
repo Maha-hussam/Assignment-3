@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
-import { ProductsPage } from '../pages/ProductsPage';
+import { ProductsPage } from '../pages/productsPage';
 import { CartPage } from '../pages/cartPage';
 import { CheckoutPage } from '../pages/checkoutPage';
 
@@ -25,7 +25,7 @@ test.describe('Checkout Feature', () => {
     await page.waitForTimeout(2000)
     await checkout.finishOrder();
     await page.waitForTimeout(2000)
-    await expect(await checkout.getSuccessMessage()).toContain('Thank you for your order!');
+    await expect(checkout.getSuccessMessage()).toContainText('Thank you for your order!');
     await page.waitForTimeout(2000)
   });
 });
